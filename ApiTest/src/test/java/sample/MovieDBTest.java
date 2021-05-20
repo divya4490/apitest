@@ -79,7 +79,7 @@ public class MovieDBTest {
 	
 
 	public void allValidValuesRateMovie(String api_key, String url, int movie_id, String content_type, float rating) {
-//		String valid_code = 201;
+		int valid_code = 201;
 		JSONObject requestParam = new JSONObject();
 		requestParam.put("value", rating);
 		RestAssured.baseURI = url;
@@ -89,7 +89,24 @@ public class MovieDBTest {
         .body(requestParam)
         .post(postURL)
         .then()
-        .statusCode(201)
+        .statusCode(valid_code)
+        .extract()
+        .response();
+
+		
+	}
+	
+	
+	public void allValidValuesdeleteRating(String api_key, String url, int movie_id, String content_type) {
+		int valid_code = 200;
+		RestAssured.baseURI = url;
+		String postURL = "/movie/"+ movie_id +"/rating";
+		given().queryParam("api_key",api_key)
+        .contentType(ContentType.JSON)
+        .when()
+        .delete(postURL)
+        .then()
+        .statusCode(valid_code)
         .extract()
         .response();
 
